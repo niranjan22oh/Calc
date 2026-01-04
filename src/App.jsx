@@ -1,4 +1,7 @@
+import { useState } from "react";
 export default function Calculator() {
+  const [expression, setExpression] = useState("0");
+  const [result, setResult] = useState("0");
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -15,11 +18,11 @@ export default function Calculator() {
           <div className="text-right">
             <div className="text-gray-500 text-lg h-8 mb-2">
               {/* Expression Display */}
-              <span>0</span>
+              <span>{expression}</span>
             </div>
             <div className="text-white text-5xl font-light">
               {/* Result Display */}
-              <span>0</span>
+              <span>{result}</span>
             </div>
           </div>
         </div>
