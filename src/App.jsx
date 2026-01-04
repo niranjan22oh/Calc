@@ -2,6 +2,19 @@ import { useState } from "react";
 export default function Calculator() {
   const [expression, setExpression] = useState("0");
   const [result, setResult] = useState("0");
+  const handleNumberClick=(value) => {
+    setExpression((prev) => {
+      //if i insert a zero in start while appending we ignore it 
+      if(prev=="0")
+      {
+        return value;
+      }
+      return prev+value;
+    });
+    
+    //we reset result while typing
+    setResult("0");
+  }
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -45,13 +58,13 @@ export default function Calculator() {
             </button>
 
             {/* Row 2 - 7, 8, 9, Multiply */}
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("7")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               7
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("8")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               8
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("9")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               9
             </button>
             <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
@@ -59,13 +72,13 @@ export default function Calculator() {
             </button>
 
             {/* Row 3 - 4, 5, 6, Subtract */}
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("4")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               4
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("5")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               5
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("6")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               6
             </button>
             <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
@@ -73,13 +86,13 @@ export default function Calculator() {
             </button>
 
             {/* Row 4 - 1, 2, 3, Add */}
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("1")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               1
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("2")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               2
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("3")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               3
             </button>
             <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
@@ -87,7 +100,7 @@ export default function Calculator() {
             </button>
 
             {/* Row 5 - 0, Decimal, Equals */}
-            <button className="col-span-2 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={()=> handleNumberClick("0")} className="col-span-2 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               0
             </button>
             <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
