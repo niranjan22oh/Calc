@@ -15,6 +15,24 @@ export default function Calculator() {
     //we reset result while typing
     setResult("0");
   }
+  const handleDecimalClick=() => {
+    setExpression((prev) => {
+      //first we split the expressions based on operators to get current number
+      const parts= prev.split(/[+\-*/]/);
+      const currentNumber= parts[parts.length-1];
+      if(currentNumber.includes("."))
+      {
+        return prev;
+      }
+      //if a expression ends with a operator, add "0." i.e 5+.=5+0.something
+      if(/[+\-*/]/.test(prev))
+      {
+        return prev+"0.";
+      }
+      return prev + ".";
+    })
+    setResult("0");
+  }
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -103,7 +121,7 @@ export default function Calculator() {
             <button onClick={()=> handleNumberClick("0")} className="col-span-2 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               0
             </button>
-            <button className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={handleDecimalClick} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               .
             </button>
             <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
