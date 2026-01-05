@@ -110,6 +110,7 @@ export default function Calculator() {
   useEffect(() => {
   const handleKeyDown = (e) => {
     const code = e.code;
+    const key=e.key;
     // Numbers
     if (key >= "0" && key <= "9") {
       handleNumberClick(key);
