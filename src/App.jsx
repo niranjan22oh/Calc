@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 export default function Calculator() {
   const [expression, setExpression] = useState("0");
   const [result, setResult] = useState("0");
@@ -74,6 +74,7 @@ export default function Calculator() {
   );
   };
   const handleEqual=() => {
+    console.log("handleEqual CALLED with expression:", expression);
     try{
       //this block invalid endingslike for eg: 7== or 7== does nothing
        if(/[+\-*/]$/.test(expression)) return;
@@ -105,7 +106,68 @@ export default function Calculator() {
     })
     setResult("0");
   }
-  return (
+  //now we add keyboard support to our calculator
+  useEffect(() => {
+  const handleKeyDown = (e) => {
+    const code = e.code;
+    // Numbers
+    if (key >= "0" && key <= "9") {
+      handleNumberClick(key);
+      return;
+    }
+    // Decimal
+    if (key === ".") {
+      handleDecimalClick();
+      return;
+    }
+    // Operators
+    if (key === "+" || key === "-" || key === "*" || key === "/") {
+      handleOperatorClick(key);
+      return;
+    }
+    // Percentage
+    if (key === "%") {
+      handlePercent();
+      return;
+    }
+    // Equals / Enter
+    // Check both key and code (supports main Enter, NumpadEnter, and "=")
+    //console.log("RAW KEY:", e.key, "CODE:", e.code);
+    if (key === "Enter" || code === "Enter" || code === "NumpadEnter" || key === "=") {
+      e.preventDefault();
+      handleEqual();
+      return;
+    }
+    // Backspace
+    if (key === "Backspace") {
+      e.preventDefault();
+      handleBackspace();
+      return;
+    }
+    // Clear (Escape)
+    if (key === "Escape") {
+      e.preventDefault();
+      handleAllClear();
+      return;
+    }
+  };
+  window.addEventListener("keydown", handleKeyDown);
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+}, [
+// Keyboard support initially failed due to a stale closure in a global keydown listener.
+// I fixed it by correctly declaring effect dependencies so handlers always access fresh state.
+  handleNumberClick,
+  handleDecimalClick,
+  handleOperatorClick,
+  handlePercent,
+  handleEqual,
+  handleBackspace,
+  handleAllClear,
+]);
+
+return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
         {/* Mode Toggle */}
