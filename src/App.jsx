@@ -48,6 +48,14 @@ export default function Calculator() {
     setExpression("0");
     setResult("0");
   };
+  const handleBackspace=() => {
+    setExpression((prev) => {
+        //so if only one char is present or already zero we reset to 0
+        if(prev.length==1 || prev=="0") return "0";
+        return prev.slice(0,-1);//otherwie we remove last char
+    });
+    setResult("0");
+  }
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -80,7 +88,7 @@ export default function Calculator() {
             <button onClick={handleAllClear}className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               AC
             </button>
-            <button className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={handleBackspace} className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               ⌫
             </button>
             <button className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
