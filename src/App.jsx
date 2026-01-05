@@ -56,6 +56,25 @@ export default function Calculator() {
     });
     setResult("0");
   }
+  const handleEqual=() => {
+    try{
+       if(/[+\-*/]$/.test(expression)) return;
+       const res=Function(`return ${expression}`)();
+
+        if(!isFinite(res))
+        {
+            setResult("Error");
+            return;
+        }
+
+        const formattedres=Math.round((res+Number.EPSILON)*1e10)/1e10;
+        setResult(formattedres.toString());
+        setExpression(formattedres.toString());
+    }
+    catch(error){
+      setResult("Error");
+    }
+  }
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -147,7 +166,7 @@ export default function Calculator() {
             <button onClick={handleDecimalClick} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               .
             </button>
-            <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
+            <button onClick={handleEqual} className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
               =
             </button>
           </div>
