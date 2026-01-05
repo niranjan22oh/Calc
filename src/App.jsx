@@ -43,6 +43,11 @@ export default function Calculator() {
     });
     setResult("0");
   }
+  const handleAllClear= ()=>
+  {
+    setExpression("0");
+    setResult("0");
+  };
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -72,7 +77,7 @@ export default function Calculator() {
         <div className="p-6">
           <div className="grid grid-cols-4 gap-3">
             {/* Row 1 - Clear, Delete, Percent, Divide */}
-            <button className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={handleAllClear}className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               AC
             </button>
             <button className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
