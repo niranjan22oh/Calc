@@ -33,6 +33,16 @@ export default function Calculator() {
     })
     setResult("0");
   }
+  const handleOperatorClick=(operator) =>{
+    setExpression((prev)=>{
+      //if expression is empty or zero do nothing
+      if(prev=="0") return 0;
+      //if i enter two operators back to back conider the new one as the one we need to work with
+      if(/[+\-*/]$/.test(prev)) return prev.slice(0,-1) + operator;
+      return prev+operator;
+    });
+    setResult("0");
+  }
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-gray-950 rounded-3xl shadow-2xl overflow-hidden">
@@ -71,7 +81,7 @@ export default function Calculator() {
             <button className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               %
             </button>
-            <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
+            <button onClick={() => handleOperatorClick("/")}className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
               ÷
             </button>
 
@@ -85,7 +95,7 @@ export default function Calculator() {
             <button onClick={()=> handleNumberClick("9")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               9
             </button>
-            <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
+            <button onClick={() => handleOperatorClick("*")}className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
               ×
             </button>
 
@@ -99,7 +109,7 @@ export default function Calculator() {
             <button onClick={()=> handleNumberClick("6")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               6
             </button>
-            <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
+            <button onClick={() => handleOperatorClick("-")}className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
               −
             </button>
 
@@ -113,7 +123,7 @@ export default function Calculator() {
             <button onClick={()=> handleNumberClick("3")} className="col-span-1 bg-gray-800 text-white rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               3
             </button>
-            <button className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
+            <button onClick={() => handleOperatorClick("+")} className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
               +
             </button>
 
