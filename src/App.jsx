@@ -56,24 +56,54 @@ export default function Calculator() {
     });
     setResult("0");
   }
+  //50% becomes 50/100
+  //200 + 10%= 200+ (200*10/100)
+  //200*10% becomes 200*0.1
+  const transformPercentExpression=(expr) => {
+  return expr.replace(
+    /(\d+(\.\d+)?)([+\-*/])(\d+(\.\d+)?)%/g,
+    (_, base, _d1, operator, percent) => {
+      if (operator === "+" || operator === "-") {
+        return `${base}${operator}(${base}*${percent}/100)`;
+      }
+      return `${base}${operator}(${percent}/100)`;
+    }
+  ).replace(
+    /(\d+(\.\d+)?)%/g,
+    (_, num) => `${num}/100`
+  );
+  };
   const handleEqual=() => {
     try{
+      //this block invalid endingslike for eg: 7== or 7== does nothing
        if(/[+\-*/]$/.test(expression)) return;
-       const res=Function(`return ${expression}`)();
+        let expr = transformPercentExpression(expression);
+        const res = Function(`return ${expr}`)();//helps in correc evaluation
 
-        if(!isFinite(res))
+        if(!isFinite(res))//helps to catch divide by zero type of errors
         {
             setResult("Error");
             return;
         }
 
-        const formattedres=Math.round((res+Number.EPSILON)*1e10)/1e10;
+        const formattedres=Math.round((res+Number.EPSILON)*1e10)/1e10;//precents excessive decimal rounding
         setResult(formattedres.toString());
         setExpression(formattedres.toString());
     }
     catch(error){
       setResult("Error");
     }
+  }
+
+  const handlePercent=() => {
+    setExpression((prev) => {
+      if(prev==="0") return prev;
+      if (/[+\-*/.]$/.test(prev)) return prev;
+      if (prev.endsWith("%")) return prev;
+
+      return prev + "%";
+    })
+    setResult("0");
   }
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
@@ -110,7 +140,7 @@ export default function Calculator() {
             <button onClick={handleBackspace} className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               ⌫
             </button>
-            <button className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
+            <button onClick={handlePercent} className="col-span-1 bg-gray-800 text-orange-400 rounded-2xl py-6 text-xl font-medium hover:bg-gray-700 transition">
               %
             </button>
             <button onClick={() => handleOperatorClick("/")}className="col-span-1 bg-orange-500 text-white rounded-2xl py-6 text-xl font-medium hover:bg-orange-600 transition">
