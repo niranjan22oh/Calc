@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 export default function Calculator() {
+  const [isScientific, setIsScientific] = useState(false);
   const [expression, setExpression] = useState("0");
   const [result, setResult] = useState("0");
   const handleNumberClick=(value) => {
@@ -167,6 +168,9 @@ export default function Calculator() {
   handleBackspace,
   handleAllClear,
 ]);
+const toggleScientificMode = () => {
+  setIsScientific((prev) => !prev);
+};
 
 return (
     <div className="min-h-screen bg-linear-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
@@ -174,8 +178,8 @@ return (
         {/* Mode Toggle */}
         <div className="bg-gray-900 px-6 py-4 flex justify-between items-center">
           <h2 className="text-gray-400 text-sm font-medium">Calculator</h2>
-          <button className="px-4 py-1.5 bg-gray-800 text-gray-300 rounded-full text-sm hover:bg-gray-700 transition">
-            Scientific
+          <button onClick={toggleScientificMode} className="px-4 py-1.5 bg-gray-800 text-gray-300 rounded-full text-sm hover:bg-gray-700 transition">
+            {isScientific ? "Basic" : "Scientific"}
           </button>
         </div>
 
@@ -265,7 +269,8 @@ return (
           </div>
 
           {/* Scientific Mode Extension (Hidden by default) */}
-          <div className="hidden mt-4 border-t border-gray-800 pt-4">
+          {isScientific && (
+            <div className="mt-4 border-t border-gray-800 pt-4">
             <div className="grid grid-cols-5 gap-2">
               {/* Scientific Functions Row 1 */}
               <button className="bg-gray-700 text-blue-400 rounded-xl py-4 text-sm font-medium hover:bg-gray-600 transition">
@@ -318,7 +323,7 @@ return (
                 !
               </button>
             </div>
-          </div>
+          </div>)}
         </div>
       </div>
     </div>
